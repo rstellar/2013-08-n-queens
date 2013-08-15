@@ -17,7 +17,7 @@
     },
 
     togglePiece: function(rowIndex, colIndex){
-      this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
+      this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex]  ;
       this.trigger('change');
     },
 
@@ -58,18 +58,43 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
-      return false; // fixme
+      //sum the row, if > 1, there return true because there is conflict.
+      var sum = 0;
+      for (var i = 0; i < this.get(rowIndex).length; i++) {
+        sum = sum + this.get(rowIndex)[i];
+      }
+      console.log(sum);
+      if (sum > 1){
+        return true;
+      } else{
+        return false;
+      }
     },
 
     hasAnyRowConflicts: function(){
-      return false; // fixme
+      //reduce(hasRowConflictAt, this.get )
+      for (var i = 0; i < this.attributes.n; i++) {
+        if (this.hasRowConflictAt(i)){
+          return true;
+        }
+      }
+      return false;
     },
 
     hasColConflictAt: function(colIndex){
-      return false; // fixme
+      var sum = 0;
+      for (var i = 0; i < this.attributes.n; i++) {
+        sum = sum + this.attributes[i][colIndex];
+      }
+      return sum > 1 ? true : false;
     },
 
     hasAnyColConflicts: function(){
+      for (var i = 0; i < this.attributes[0].length; i++) {
+        if(this.hasColConflictAt(i)){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
