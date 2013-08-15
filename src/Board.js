@@ -99,7 +99,15 @@
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var sum = 0;
+      var col = majorDiagonalColumnIndexAtFirstRow;
+      for (var row = 0; row < this.attributes.n; row++) {
+        if(this._isInBounds(row, col)){
+          sum += this.attributes[row][col];
+          col++;
+        }
+      }
+      return sum > 1 ? true : false;
     },
 
     hasAnyMajorDiagonalConflicts: function(){
