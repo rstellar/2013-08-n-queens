@@ -104,22 +104,41 @@
       for (var row = 0; row < this.attributes.n; row++) {
         if(this._isInBounds(row, col)){
           sum += this.attributes[row][col];
-          col++;
         }
+        col++;
       }
       return sum > 1 ? true : false;
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      return false; // fixme
+      var leftIndex = -(this.attributes.n - 2);
+      for (var cols = leftIndex; cols < this.attributes.n - 2; cols++) {
+        if(this.hasMajorDiagonalConflictAt(cols)){
+          return true;
+        }
+      }
+      return false;
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var sum = 0;
+      var col = minorDiagonalColumnIndexAtFirstRow;
+      for (var row = 0; row < this.attributes.n; row++) {
+        if(this._isInBounds(row,col)){
+          sum += this.attributes[row][col];
+        }
+        col--;
+      }
+      return sum > 1 ? true : false;
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      return false; // fixme
+      for (var minorIndex = 1; minorIndex < this.attributes.n+1; minorIndex++) {
+        if(this.hasMinorDiagonalConflictAt(minorIndex)){
+          return true;
+        }
+      }
+      return false;
     }
 
   });
