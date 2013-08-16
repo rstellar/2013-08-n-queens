@@ -31,7 +31,7 @@
 
 
     hasAnyRooksConflicts: function(){
-      return this.hasAnyRowConflicts() || this.hasAnyColConflicts();
+      return this.hasAnyRowConflicts() || this.hasAnyColConflicts() 
     },
 
     hasAnyQueenConflictsOn: function(rowIndex, colIndex){
@@ -63,8 +63,7 @@
       for (var i = 0; i < this.get(rowIndex).length; i++) {
         sum = sum + this.get(rowIndex)[i];
       }
-      console.log(sum);
-      if (sum > 1){
+      if (sum > 1 ){
         return true;
       } else{
         return false;
@@ -81,6 +80,15 @@
       return false;
     },
 
+    hasSomeEmptyRows: function(){
+      for(var i = 0; i < this.attributes.n; i++) {
+        if(_(this.get(i)).reduce(function(sum, num){ return sum + num; }, 0) === 0){
+          return true;
+        }
+      }
+      return false;
+    },
+
     hasColConflictAt: function(colIndex){
       var sum = 0;
       for (var i = 0; i < this.attributes.n; i++) {
@@ -90,7 +98,7 @@
     },
 
     hasAnyColConflicts: function(){
-      for (var i = 0; i < this.attributes[0].length; i++) {
+      for (var i = 0; i < this.attributes.n; i++) {
         if(this.hasColConflictAt(i)){
           return true;
         }
