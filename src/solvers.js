@@ -23,23 +23,22 @@ window.countNRooksSolutions = function(n){
   var board = new Board(makeEmptyMatrix(n));
 
   var countNQ = function(board, row){
-    debugger;
     if(row < n){
       for(var col = 0; col < n; col++){
         copy = _.extend({}, board);
         copy.attributes[row][col]=1;
+
+        if (!board.hasAnyRooksConflicts() && (row === n-1)){
+          solutionCount++;
+        }
+
         if (!copy.hasAnyRooksConflicts()){
           countNQ(copy,row+1);
         }
-      }
-    } else {
-      if(!board.hasAnyRooksConflicts() && (row === n-1)){
-        console.log('Success!');
-        console.log(board.attributes);
-        solutionCount++;
+        copy.attributes[row][col]=0;
       }
     }
-  };
+    };
   countNQ(board,0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -55,7 +54,36 @@ window.findNQueensSolution = function(n){
 };
 
 window.countNQueensSolutions = function(n){
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0; //fixme
+
+  var makeEmptyMatrix = function(n){
+    return _(_.range(n)).map(function(){
+      return _(_.range(n)).map(function(){
+        return 0;
+      });
+    });
+  };
+
+  var board = new Board(makeEmptyMatrix(n));
+
+  var countNQ = function(board, row){
+    if(row < n){
+      for(var col = 0; col < n; col++){
+        copy = _.extend({}, board);
+        copy.attributes[row][col]=1;
+
+        if (!board.hasAnyQueensConflicts() && (row === n-1)){
+          solutionCount++;
+        }
+
+        if (!copy.hasAnyQueensConflicts()){
+          countNQ(copy,row+1);
+        }
+        copy.attributes[row][col]=0;
+      }
+    }
+    };
+  countNQ(board,0);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
