@@ -3,18 +3,49 @@
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
 
 window.findNRooksSolution = function(n){
-  var solution = undefined; //fixme
+  var solution = {}; //fixme
 
   console.log('Single solution for ' + n + ' rooks:', solution);
   return solution;
 };
 
 window.countNRooksSolutions = function(n){
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
 
+  var makeEmptyMatrix = function(n){
+    return _(_.range(n)).map(function(){
+      return _(_.range(n)).map(function(){
+        return 0;
+      });
+    });
+  };
+
+  var board = new Board(makeEmptyMatrix(n));
+
+  var countNQ = function(board, row){
+    debugger;
+    if(row < n){
+      for(var col = 0; col < n; col++){
+        copy = _.extend({}, board);
+        copy.attributes[row][col]=1;
+        if (!copy.hasAnyRooksConflicts()){
+          countNQ(copy,row+1);
+        }
+      }
+    } else {
+      if(!board.hasAnyRooksConflicts() && (row === n-1)){
+        console.log('Success!');
+        console.log(board.attributes);
+        solutionCount++;
+      }
+    }
+  };
+  countNQ(board,0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
+
+//&& !board.hasSomeEmptyRows()
 
 window.findNQueensSolution = function(n){
   var solution = undefined; //fixme
